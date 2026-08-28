@@ -1,6 +1,7 @@
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { useState, useEffect } from "react";
 import Filmes from "./Filmes";
+import Shimmer from "./Shimmer";
 
 export default function PaginaInicial({ navigation }) {
     const API = "http://10.0.2.2:3000/filmes";
@@ -10,11 +11,20 @@ export default function PaginaInicial({ navigation }) {
     const [genero, setGenero] = useState("");
     const [ano, setAno] = useState("");
     const [capa, setCapa] = useState("");
+    const [carregando, setCarregando] = useState(true);
 
     async function carregarFilmes() {
-        const resposta = await fetch(API);
-        const dados = await resposta.json();
-        setFilmes(dados);
+        setCarregando(true);
+
+        try {
+            const resposta = await fetch(API);
+            const dados = await resposta.json();
+            setFilmes(dados);
+        } catch (erro) {
+            console.log("Erro ao carregar filmes");
+        }
+
+        setCarregando(false);
     }
 
     async function adicionaFilme() {
@@ -94,11 +104,19 @@ export default function PaginaInicial({ navigation }) {
                 <Text style={styles.TextButton}>Adicionar</Text>
             </TouchableOpacity>
 
-            <Filmes
-                filmes={filmes}
-                deletarFilme={deletarFilme}
-                navigation={navigation}
-            />
+            {carregando ? (
+                <View>
+                    <Shimmer />
+                    <Shimmer />
+                    <Shimmer />
+                </View>
+            ) : (
+                <Filmes
+                    filmes={filmes}
+                    deletarFilme={deletarFilme}
+                    navigation={navigation}
+                />
+            )}
         </View>
     );
 }

@@ -1,8 +1,8 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import PaginaInicial from "./src/screens/PaginaInicial";
-import DetailsScreen from "./src/screens/DetailsScreen";
+import PaginaInicial from "./PaginaInicial";
+import DetailsScreen from "./DetailsScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -17,11 +17,11 @@ export default function App() {
                     },
                     headerTintColor: "#FFFFFF",
                     headerTitleStyle: {
-                    color: "#B026FF",
-                    fontWeight: "bold",
+                        color: "#B026FF",
+                        fontWeight: "bold",
                     },
                     contentStyle: {
-                    backgroundColor: "#0B0B0F",
+                        backgroundColor: "#0B0B0F",
                     },
                 }}
             >
